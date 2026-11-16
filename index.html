@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dashAGT — build internal tools without code</title>
+<meta name="description" content="Build the internal tools your team runs on, from approval workflows to field data collection. No code: design screens, model data, add logic and documents, and publish to web and Android.">
+<meta property="og:title" content="dashAGT — build internal tools without code">
+<meta property="og:description" content="Build the internal tools your team runs on, from approval workflows to field data collection. No code: design screens, model data, add logic and documents, and publish to web and Android.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0e2a47">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e2a47'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='18' fill='white' text-anchor='middle'%3Ed%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0e2a47}a:hover{color:#1d4a78}
+html{scroll-behavior:smooth}
+.lift{transition:transform .25s ease, border-color .25s ease}
+.lift:hover{transform:translateY(-4px);border-color:#9fb2c6}
+.btn{transition:transform .2s ease, filter .2s ease}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+@media (max-width: 760px){
+.nav-links{display:none !important}
+.hero-phone{position:relative !important;right:auto !important;bottom:auto !important;margin:20px auto 0 !important}
+}
+@media (max-width: 520px){
+.mock-palette{display:none !important}
+.mock-stats{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes chipDrag{0%{opacity:0;transform:translate(0,0)}5%{opacity:1;transform:translate(0,0) scale(1.06)}28%{opacity:1;transform:translate(150px,30px) scale(1.06)}32%,100%{opacity:0;transform:translate(150px,30px) scale(1)}}
+@keyframes zone{0%,12%{border-color:#c8d3df;background:transparent}18%,30%{border-color:#2f7de1;background:#f2f7fe}34%,100%{border-color:transparent;background:transparent}}
+@keyframes placeholder{0%,29%{opacity:1}33%,96%{opacity:0}100%{opacity:1}}
+@keyframes tableIn{0%,31%{opacity:0;transform:scale(.96)}37%,92%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes row1{0%,42%{opacity:0;transform:translateY(-6px);background:#e6f0fc}47%{opacity:1;transform:none;background:#e6f0fc}56%,92%{opacity:1;background:#ffffff}98%,100%{opacity:0}}
+@keyframes row2{0%,52%{opacity:0;transform:translateY(-6px);background:#e6f0fc}57%{opacity:1;transform:none;background:#e6f0fc}66%,92%{opacity:1;background:#ffffff}98%,100%{opacity:0}}
+@keyframes row3{0%,62%{opacity:0;transform:translateY(-6px);background:#e6f0fc}67%{opacity:1;transform:none;background:#e6f0fc}76%,92%{opacity:1;background:#ffffff}98%,100%{opacity:0}}
+@keyframes row4{0%,72%{opacity:0;transform:translateY(-6px);background:#e6f0fc}77%{opacity:1;transform:none;background:#e6f0fc}85%,92%{opacity:1;background:#ffffff}98%,100%{opacity:0}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(29,90,60,.35)}50%{box-shadow:0 0 0 6px rgba(29,90,60,0)}}
+@keyframes layer{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes blink{50%{opacity:0}}
+@keyframes reveal{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: no-preference){
+.fade-up{animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) both}
+.d1{animation-delay:.1s}.d2{animation-delay:.25s}.d3{animation-delay:.4s}.d4{animation-delay:.55s}
+.float{animation:float 5s ease-in-out infinite}
+.drag-chip{animation:chipDrag 9s ease-in-out infinite}
+.drop-area{animation:zone 9s ease-in-out infinite}
+.placeholder{animation:placeholder 9s ease-in-out infinite}
+.table-in{animation:tableIn 9s ease-in-out infinite}
+.r1{animation:row1 9s ease-out infinite}
+.r2{animation:row2 9s ease-out infinite}
+.r3{animation:row3 9s ease-out infinite}
+.r4{animation:row4 9s ease-out infinite}
+.pulse{animation:pulse 2s ease-in-out infinite}
+.layer{animation:layer .7s cubic-bezier(.2,.7,.2,1) both}
+.l1{animation-delay:.2s}.l2{animation-delay:.4s}.l3{animation-delay:.6s}.l4{animation-delay:.8s}
+.caret{animation:blink 1s steps(1) infinite}
+@supports (animation-timeline: view()){
+.reveal{animation:reveal linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
+}
+}
+</style>
+</head>
+<body>
+<div style="font-family: 'IBM Plex Sans', system-ui, sans-serif; color: #14212f; background: #ffffff; overflow-x: hidden">
+
+<header style="background: #0e2a47; color: #ffffff">
+<div style="max-width: 1180px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#top" style="display: flex; align-items: center; gap: 10px; color: #ffffff; text-decoration: none">
+<span style="width: 32px; height: 32px; border-radius: 8px; background: #ffffff; color: #0e2a47; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px">d</span>
+<span style="font-weight: 600; font-size: 20px; letter-spacing: -0.01em">dashAGT</span>
+</a>
+<nav class="nav-links" aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 15px">
+<a href="#stack" style="color: #d6e2ee; text-decoration: none">Platform</a>
+<a href="#how" style="color: #d6e2ee; text-decoration: none">How it works</a>
+<a href="#mobile" style="color: #d6e2ee; text-decoration: none">Mobile</a>
+<a href="#use-cases" style="color: #d6e2ee; text-decoration: none">Use cases</a>
+</nav>
+<a class="btn" href="https://forms.gle/bfXitCdKrd3Gf9nSA" target="_blank" rel="noopener" style="background: #f2a93b; color: #2a1903; text-decoration: none; font-size: 15px; font-weight: 600; padding: 11px 18px; border-radius: 8px">Join the pilot</a>
+</div>
+</header>
+
+<section id="top" style="background: #0e2a47; color: #ffffff">
+<div style="max-width: 1180px; margin: 0 auto; padding: clamp(40px, 6vw, 72px) 24px clamp(64px, 9vw, 112px); display: flex; flex-wrap: wrap; gap: clamp(40px, 5vw, 64px); align-items: center">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<span class="fade-up" style="align-self: flex-start; font-size: 13px; color: #d6e2ee; border: 1px solid #3d5f84; border-radius: 999px; padding: 6px 12px">Internal tools · Full-stack · Web and Android</span>
+<h1 class="fade-up d1" style="margin: 0; font-size: clamp(38px, 6vw, 62px); line-height: 1.04; font-weight: 700; letter-spacing: -0.025em">Build your internal tools without writing code.</h1>
+<p class="fade-up d2" style="margin: 0; font-size: clamp(17px, 1.6vw, 19px); line-height: 1.6; color: #d6e2ee; max-width: 560px">Create the apps your team runs on, from approval workflows to field data collection. Design the screens, model your data, add logic and documents, then publish to the web and Android. dashAGT runs the backend for you.</p>
+<div class="fade-up d3" style="display: flex; flex-wrap: wrap; gap: 12px">
+<a class="btn" href="https://forms.gle/bfXitCdKrd3Gf9nSA" target="_blank" rel="noopener" style="background: #f2a93b; color: #2a1903; text-decoration: none; font-size: 16px; font-weight: 600; padding: 15px 24px; border-radius: 10px">Join the pilot</a>
+<a class="btn" href="#how" style="color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 500; padding: 14px 22px; border-radius: 10px; border: 1px solid #5a7da3">See how it works</a>
+</div>
+</div>
+
+<div class="fade-up d4" aria-hidden="true" style="flex: 1 1 460px; min-width: 0; position: relative; padding-bottom: 32px">
+<div style="background: #ffffff; border-radius: 14px; overflow: hidden; color: #14212f; border: 1px solid #2c4d71; position: relative">
+<div style="background: #f3f5f8; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dde3ea; font-size: 12px; color: #5b6b7f">
+<span>Asset register · Draft</span>
+<span style="display: flex; gap: 6px"><span style="background: #0e2a47; color: #ffffff; padding: 3px 10px; border-radius: 6px">Desktop</span><span style="padding: 3px 10px">Phone</span></span>
+</div>
+<div style="display: flex; position: relative">
+<div class="mock-palette" style="width: 110px; flex-shrink: 0; border-right: 1px solid #edf0f4; padding: 12px; display: flex; flex-direction: column; gap: 6px; font-size: 11px; position: relative">
+<span style="color: #5b6b7f; font-weight: 600">COMPONENTS</span>
+<span style="border: 1px solid #dde3ea; border-radius: 6px; padding: 6px 8px">Table</span>
+<span style="border: 1px solid #dde3ea; border-radius: 6px; padding: 6px 8px">Form</span>
+<span style="border: 1px solid #dde3ea; border-radius: 6px; padding: 6px 8px">Chart</span>
+<span style="border: 1px solid #dde3ea; border-radius: 6px; padding: 6px 8px">Upload</span>
+<span style="border: 1px solid #dde3ea; border-radius: 6px; padding: 6px 8px">Button</span>
+<span class="drag-chip" style="position: absolute; left: 12px; right: 12px; top: 33px; border: 1px solid #2f7de1; background: #e6f0fc; color: #0e2a47; border-radius: 6px; padding: 6px 8px; font-weight: 500; opacity: 0">Table</span>
+</div>
+<div style="flex: 1; min-width: 0; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<span style="font-weight: 600; font-size: 16px; color: #0e2a47">Assets</span>
+<span style="font-size: 11px; background: #0e2a47; color: #ffffff; padding: 4px 10px; border-radius: 6px">New asset</span>
+</div>
+<div class="drop-area" style="position: relative; min-height: 176px; border: 2px dashed transparent; border-radius: 10px; padding: 4px">
+<div class="placeholder" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #5b6b7f; opacity: 0">Drag a component here</div>
+<div class="table-in" style="border: 1px solid #dde3ea; border-radius: 8px; overflow: hidden; font-size: 11px; background: #ffffff">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #f6f8fb; color: #5b6b7f; padding: 7px 10px"><span>Name</span><span>Assigned to</span><span>Status</span></div>
+<div class="r1" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 7px 10px; border-top: 1px solid #edf0f4"><span>Laptop</span><span>J. Wanjiru</span><span style="color: #1d5a3c">Assigned</span></div>
+<div class="r2" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 7px 10px; border-top: 1px solid #edf0f4"><span>Projector</span><span>—</span><span style="color: #3c4b5c">Available</span></div>
+<div class="r3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 7px 10px; border-top: 1px solid #edf0f4"><span>Vehicle</span><span>P. Otieno</span><span style="color: #7a4a0c">In repair</span></div>
+<div class="r4" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 7px 10px; border-top: 1px solid #edf0f4"><span>Tablet</span><span>A. Mwangi</span><span style="color: #1d5a3c">Assigned</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="hero-phone float" style="position: absolute; right: -8px; bottom: -36px; width: 168px; background: #ffffff; border-radius: 22px; border: 6px solid #14212f; padding: 12px 10px; color: #14212f; display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 12px; font-weight: 600; color: #0e2a47">New household</div>
+<div style="border: 1px solid #d3dbe4; border-radius: 6px; padding: 6px; font-size: 10px; color: #14212f">Grace Achieng<span class="caret" style="color: #2f7de1">|</span></div>
+<div style="border: 1px solid #d3dbe4; border-radius: 6px; padding: 6px; font-size: 10px; color: #5b6b7f">Water source ▾</div>
+<div style="border: 1px dashed #9fb2c6; border-radius: 6px; padding: 14px 6px; font-size: 10px; color: #5b6b7f; text-align: center">Take photo</div>
+<div style="background: #0e2a47; color: #ffffff; border-radius: 6px; padding: 7px; font-size: 10px; text-align: center">Save · works offline</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="stack" style="background: #ffffff">
+<div style="max-width: 1180px; margin: 0 auto; padding: clamp(64px, 9vw, 104px) 24px; display: flex; flex-wrap: wrap; gap: clamp(40px, 5vw, 64px); align-items: center">
+<div class="reveal" style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 14px; font-weight: 600; color: #1d4a78; letter-spacing: 0.04em">THE WHOLE STACK</span>
+<h2 style="margin: 0; font-size: clamp(30px, 4vw, 42px); line-height: 1.12; font-weight: 700; color: #0e2a47; letter-spacing: -0.02em">Frontend, backend and mobile. One platform.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #3c4b5c">Most no-code tools stop at the screen. dashAGT gives you the database, the business logic, the file storage and the mobile app too, so one person can build the internal tools that used to need a development team.</p>
+</div>
+<div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div class="layer l1 lift" style="border: 1px solid #dde3ea; border-radius: 14px; padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start; background: #ffffff">
+<span style="flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #1d4a78; background: #e6eef8; border-radius: 6px; padding: 4px 8px">UI</span>
+<div><h3 style="margin: 0 0 4px; font-size: 18px; color: #0e2a47">Interface</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #3c4b5c">Drag-and-drop pages with layouts for desktop, tablet and phone.</p></div>
+</div>
+<div class="layer l2 lift" style="border: 1px solid #dde3ea; border-radius: 14px; padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start; background: #ffffff">
+<span style="flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #1d4a78; background: #e6eef8; border-radius: 6px; padding: 4px 8px">LOGIC</span>
+<div><h3 style="margin: 0 0 4px; font-size: 18px; color: #0e2a47">Business logic</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #3c4b5c">Queries, validations, workflows, approval chains and scheduled jobs.</p></div>
+</div>
+<div class="layer l3 lift" style="border: 1px solid #dde3ea; border-radius: 14px; padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start; background: #ffffff">
+<span style="flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #1d4a78; background: #e6eef8; border-radius: 6px; padding: 4px 8px">DATA</span>
+<div><h3 style="margin: 0 0 4px; font-size: 18px; color: #0e2a47">Database and files</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #3c4b5c">Managed tables, or your own Postgres, MySQL, SQL Server and REST APIs. Uploads and generated PDFs included.</p></div>
+</div>
+<div class="layer l4 lift" style="border: 1px solid #0e2a47; border-radius: 14px; padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start; background: #0e2a47; color: #ffffff">
+<span style="flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #2a1903; background: #f2a93b; border-radius: 6px; padding: 4px 8px">SHIP</span>
+<div><h3 style="margin: 0 0 4px; font-size: 18px; color: #ffffff">Web and Android</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #d6e2ee">Publish once. It's live on the web and in the dashAGT Android app.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="how" style="background: #f3f5f8">
+<div style="max-width: 1180px; margin: 0 auto; padding: clamp(64px, 9vw, 104px) 24px; display: flex; flex-direction: column; gap: 48px">
+<div class="reveal" style="max-width: 720px; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 14px; font-weight: 600; color: #1d4a78; letter-spacing: 0.04em">HOW IT WORKS</span>
+<h2 style="margin: 0; font-size: clamp(30px, 4vw, 42px); line-height: 1.12; font-weight: 700; color: #0e2a47; letter-spacing: -0.02em">From spreadsheet to working app in an afternoon.</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px">
+<div class="reveal lift" style="background: #ffffff; border: 1px solid #ffffff; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #0e2a47; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-family: 'IBM Plex Mono', monospace">01</span>
+<h3 style="margin: 0; font-size: 19px; color: #0e2a47">Model your data</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Create tables and relationships, import Excel, or connect a database you already run.</p>
+</div>
+<div class="reveal lift" style="background: #ffffff; border: 1px solid #ffffff; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #0e2a47; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-family: 'IBM Plex Mono', monospace">02</span>
+<h3 style="margin: 0; font-size: 19px; color: #0e2a47">Design the screens</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Drag in tables, forms, charts and uploads, and bind them to your data.</p>
+</div>
+<div class="reveal lift" style="background: #ffffff; border: 1px solid #ffffff; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #0e2a47; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-family: 'IBM Plex Mono', monospace">03</span>
+<h3 style="margin: 0; font-size: 19px; color: #0e2a47">Add the logic</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Wire up actions, approval chains, workflows and document templates.</p>
+</div>
+<div class="reveal lift" style="background: #ffffff; border: 1px solid #ffffff; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #f2a93b; color: #2a1903; display: flex; align-items: center; justify-content: center; font-weight: 600; font-family: 'IBM Plex Mono', monospace">04</span>
+<h3 style="margin: 0; font-size: 19px; color: #0e2a47">Publish</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Your staff open it on the web and on Android straight away. Update anytime.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section style="background: #ffffff">
+<div style="max-width: 1180px; margin: 0 auto; padding: clamp(64px, 9vw, 104px) 24px; display: flex; flex-direction: column; gap: 48px">
+<div class="reveal" style="max-width: 720px; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 14px; font-weight: 600; color: #1d4a78; letter-spacing: 0.04em">BUILDING BLOCKS</span>
+<h2 style="margin: 0; font-size: clamp(30px, 4vw, 42px); line-height: 1.12; font-weight: 700; color: #0e2a47; letter-spacing: -0.02em">Pieces that fit together into any app.</h2>
+</div>
+<div class="reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: #dde3ea; border: 1px solid #dde3ea; border-radius: 14px; overflow: hidden">
+<div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Component library</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Tables, forms, inputs, charts, uploads, modals and more, each configurable without code.</p></div>
+<div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Action library</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Run queries, save records, navigate, notify people and call webhooks on any event.</p></div>
+<div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Approval chains</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Multi-step approvals with conditions, quorum, delegation and escalation.</p></div>
+<div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Document generation</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Your templates filled from your data and turned into numbered, verifiable PDFs.</p></div>
+<div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Files, photos and video</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Uploads attached to the right record, resumable on slow connections.</p></div>
+<div style="background: #ffffff; padding: 28px; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Workflows and notifications</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">When something happens, assign tasks and notify by email, SMS or WhatsApp.</p></div>
+</div>
+</div>
+</section>
+
+<section id="mobile" style="background: #0e2a47; color: #ffffff">
+<div style="max-width: 1180px; margin: 0 auto; padding: clamp(64px, 9vw, 104px) 24px; display: flex; flex-wrap: wrap; gap: clamp(40px, 5vw, 64px); align-items: center">
+<div class="reveal" style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<span style="font-size: 14px; font-weight: 600; color: #f2a93b; letter-spacing: 0.04em">NATIVE MOBILE, INCLUDED</span>
+<h2 style="margin: 0; font-size: clamp(30px, 4vw, 42px); line-height: 1.12; font-weight: 700; letter-spacing: -0.02em">Every internal app, on every phone your team carries.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #d6e2ee">Your staff install dashAGT from the Play Store once, sign in to your organization, and see exactly the apps you’ve given them. Publish a change and it reaches every phone, with no app store release.</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 16px; color: #ffffff">
+<li style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #f2a93b">—</span>Works offline, syncs when the signal returns</li>
+<li style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #f2a93b">—</span>Camera, GPS and signatures built in</li>
+<li style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #f2a93b">—</span>Push notifications and approvals on the go</li>
+<li style="display: flex; gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #f2a93b">—</span>Fingerprint unlock</li>
+</ul>
+<p style="margin: 0; font-size: 14px; color: #a9bbd0">Android first. iPhone coming later.</p>
+</div>
+<div aria-hidden="true" style="flex: 1 1 320px; min-width: 0; display: flex; justify-content: center">
+<div class="float" style="width: 230px; max-width: 100%; background: #ffffff; border-radius: 30px; border: 8px solid #14212f; padding: 20px 14px; color: #14212f; display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 12px; color: #5b6b7f">[Organization name]</div>
+<div style="font-size: 16px; font-weight: 600; color: #0e2a47">Your apps</div>
+<div style="border: 1px solid #dde3ea; border-radius: 10px; padding: 12px; font-size: 13px">Household survey</div>
+<div style="border: 1px solid #dde3ea; border-radius: 10px; padding: 12px; font-size: 13px">Site inspection</div>
+<div style="border: 1px solid #dde3ea; border-radius: 10px; padding: 12px; font-size: 13px; display: flex; justify-content: space-between"><span>Approvals</span><span style="background: #f2a93b; color: #2a1903; border-radius: 999px; padding: 0 8px; font-size: 12px; font-weight: 600">3</span></div>
+<div style="border: 1px solid #dde3ea; border-radius: 10px; padding: 12px; font-size: 13px">Production log</div>
+<div class="pulse" style="margin-top: 8px; font-size: 11px; color: #1d5a3c; background: #e3f2ea; border-radius: 8px; padding: 8px; text-align: center">4 records waiting to sync</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="use-cases">
+<div style="max-width: 1180px; margin: 0 auto; padding: clamp(64px, 9vw, 104px) 24px; display: flex; flex-direction: column; gap: 48px">
+<div class="reveal" style="max-width: 720px; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 14px; font-weight: 600; color: #1d4a78; letter-spacing: 0.04em">USE CASES</span>
+<h2 style="margin: 0; font-size: clamp(30px, 4vw, 42px); line-height: 1.12; font-weight: 700; color: #0e2a47; letter-spacing: -0.02em">Internal tools teams build with dashAGT.</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px">
+<div class="reveal lift" style="border: 1px solid #dde3ea; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; color: #5b6b7f">HR</span><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Leave and staff requests</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Request, supervisor, HR. Balances tracked automatically.</p></div>
+<div class="reveal lift" style="border: 1px solid #dde3ea; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; color: #5b6b7f">Finance</span><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Purchase requisitions</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Approval limits by amount, LPO generated on approval.</p></div>
+<div class="reveal lift" style="border: 1px solid #dde3ea; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; color: #5b6b7f">Field teams</span><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Data collection</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Surveys with photos and location, captured offline.</p></div>
+<div class="reveal lift" style="border: 1px solid #dde3ea; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; color: #5b6b7f">Operations</span><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Factory floor logs</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Shift production, downtime and quality checks from a phone.</p></div>
+<div class="reveal lift" style="border: 1px solid #dde3ea; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; color: #5b6b7f">Admin</span><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Asset register</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Who holds which laptop or vehicle, with handover forms.</p></div>
+<div class="reveal lift" style="border: 1px solid #dde3ea; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 13px; color: #5b6b7f">Compliance</span><h3 style="margin: 0; font-size: 18px; color: #0e2a47">Inspections and audits</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3c4b5c">Checklists with photos, sign-off and a full history.</p></div>
+</div>
+</div>
+</section>
+
+<section id="pilot" style="background: #0e2a47; color: #ffffff">
+<div style="max-width: 1180px; margin: 0 auto; padding: clamp(64px, 9vw, 104px) 24px; display: flex; flex-wrap: wrap; gap: clamp(40px, 5vw, 64px)">
+<div class="reveal" style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<span style="font-size: 14px; font-weight: 600; color: #f2a93b; letter-spacing: 0.04em">PILOT PROGRAMME</span>
+<h2 style="margin: 0; font-size: clamp(30px, 4vw, 42px); line-height: 1.12; font-weight: 700; letter-spacing: -0.02em">Be one of the first to build on dashAGT.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #d6e2ee">We’re working closely with a small group of teams to build their first internal tools alongside them. Tell us which process you want to digitize and we’ll get in touch.</p>
+</div>
+<div class="reveal" style="flex: 1 1 400px; min-width: 0; background: #ffffff; color: #14212f; border-radius: 16px; padding: clamp(24px, 4vw, 36px); display: flex; flex-direction: column; gap: 20px; box-sizing: border-box">
+<h3 style="margin: 0; font-size: 22px; color: #0e2a47">Request a pilot</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #3c4b5c">It takes about two minutes. We’ll ask for:</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: #14212f">
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="color: #1d4a78; font-weight: 600">—</span>Your name and organization</li>
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="color: #1d4a78; font-weight: 600">—</span>How to reach you</li>
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="color: #1d4a78; font-weight: 600">—</span>What you want to build</li>
+</ul>
+<a class="btn" href="https://forms.gle/bfXitCdKrd3Gf9nSA" target="_blank" rel="noopener" style="text-align: center; font-size: 16px; font-weight: 600; border-radius: 10px; padding: 15px; background: #f2a93b; color: #2a1903; text-decoration: none">Open the pilot form ↗</a>
+<p style="margin: 0; font-size: 13px; color: #5b6b7f">Opens in Google Forms. We’ll only use your details to contact you about the pilot.</p>
+</div>
+</div>
+</section>
+
+<footer style="background: #0a1f35; color: #a9bbd0">
+<div style="max-width: 1180px; margin: 0 auto; padding: 40px 24px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center; font-size: 14px">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 28px; height: 28px; border-radius: 7px; background: #ffffff; color: #0e2a47; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px">d</span>
+<span style="color: #ffffff; font-weight: 600">dashAGT</span>
+<span>· Nairobi, Kenya</span>
+</div>
+<nav aria-label="Footer" style="display: flex; flex-wrap: wrap; gap: 20px">
+<a href="#" style="color: #d6e2ee; text-decoration: none">[contact email]</a>
+</nav>
+<span>© 2026 dashAGT</span>
+</div>
+</footer>
+
+</div>
+</body>
+</html>
